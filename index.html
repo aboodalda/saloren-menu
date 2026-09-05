@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سالورين | المنيو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#123049;
+    --sea:#2F6690;
+    --gold:#F2A93B;
+    --glow:#3FC5F5;
+    --sand:#FBF4E8;
+    --foam:#FFFFFF;
+    --ink:#1C232B;
+    --ink-soft:#5B6672;
+    --line: rgba(18,48,73,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Tajawal', sans-serif; background:var(--sand); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .app{ max-width:480px; margin:0 auto; min-height:100vh; background:var(--sand); position:relative; padding-bottom:96px; }
+
+  /* HERO */
+  .hero{ background:linear-gradient(160deg, var(--navy) 0%, var(--sea) 100%); padding:28px 20px 46px; position:relative; overflow:hidden; color:var(--foam); }
+  .hero::after{ content:""; position:absolute; left:0; right:0; bottom:-2px; height:34px; background:var(--sand); border-radius:100% 100% 0 0 / 100% 100% 0 0; }
+  .hero-top{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand svg{ width:44px; height:44px; flex-shrink:0; }
+  .brand-text h1{ font-family:'Cairo', sans-serif; font-size:22px; font-weight:800; letter-spacing:.5px; }
+  .brand-text p{ font-size:11px; color:rgba(255,255,255,.75); letter-spacing:1px; }
+  .table-chip{ background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); border-radius:20px; padding:6px 14px; font-size:12px; }
+  .hero-line{ margin-top:22px; font-family:'Cairo', sans-serif; font-size:15px; font-weight:700; color:var(--gold); }
+  .hero-sub{ margin-top:4px; font-size:12.5px; color:rgba(255,255,255,.7); max-width:280px; line-height:1.6; }
+
+  /* CATEGORY PILLS + GLOW */
+  .cats-wrap{ position:relative; padding:18px 20px 10px; }
+  .cats{ display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; position:relative; padding-bottom:8px; }
+  .cats::-webkit-scrollbar{ display:none; }
+  .pill{ flex-shrink:0; padding:9px 16px; border-radius:999px; background:var(--foam); border:1px solid var(--line); font-size:13px; font-weight:500; color:var(--ink-soft); white-space:nowrap; cursor:pointer; transition: background .2s ease, color .2s ease, border-color .2s ease; position:relative; }
+  .pill.active{ background:var(--navy); color:var(--foam); border-color:var(--navy); }
+  .pill.pulse{ animation: pillGlow .75s ease; }
+  @keyframes pillGlow{
+    0%{ box-shadow:0 0 0 0 rgba(63,197,245,.95); }
+    55%{ box-shadow:0 0 20px 6px rgba(63,197,245,.6); }
+    100%{ box-shadow:0 0 0 0 rgba(63,197,245,0); }
+  }
+  .glow-indicator{
+    position:absolute; bottom:0px; height:3px; border-radius:3px;
+    background: var(--glow);
+    box-shadow: 0 0 10px 2px var(--glow), 0 0 22px 6px rgba(63,197,245,.55);
+    transition: left .35s cubic-bezier(.4,0,.2,1), width .35s cubic-bezier(.4,0,.2,1);
+    animation: pulseGlow 1.4s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{ 0%,100%{ opacity:.65; } 50%{ opacity:1; } }
+
+  /* SECTION */
+  .section{ padding:6px 20px 8px; animation: sectionIn .3s ease; }
+  @keyframes sectionIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  .section-title{ font-family:'Cairo', sans-serif; font-size:17px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+
+  /* ITEM CARD */
+  .item{ display:flex; align-items:center; gap:12px; background:var(--foam); border-radius:16px; padding:12px; margin-bottom:10px; border:1px solid var(--line); }
+  .item img{ width:52px; height:52px; border-radius:12px; object-fit:cover; flex-shrink:0; background:var(--sand); }
+  .item-body{ flex:1; }
+  .item-name{ font-size:14.5px; font-weight:500; }
+  .item-right{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .price{ font-family:'Cairo', sans-serif; font-weight:700; font-size:14px; color:var(--navy); white-space:nowrap; }
+  .add-btn{ width:30px; height:30px; border-radius:9px; background:var(--sand); border:1px solid var(--line); color:var(--navy); font-size:17px; font-weight:700; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.15s; }
+  .add-btn.added{ background:var(--gold); border-color:var(--gold); }
+  .empty-state{ padding:30px 20px; text-align:center; color:var(--ink-soft); font-size:13px; }
+
+  /* FLOATING CART */
+  .cart-bar{ position:fixed; bottom:16px; left:50%; transform:translateX(-50%) translateY(20px); width:calc(100% - 40px); max-width:440px; background:var(--navy); color:var(--foam); border-radius:16px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 14px 30px rgba(18,48,73,.35); opacity:0; pointer-events:none; transition:all .25s ease; z-index:20; }
+  .cart-bar.show{ opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
+  .cart-info{ font-size:13px; }
+  .cart-info b{ font-family:'Cairo', sans-serif; color:var(--gold); }
+  .cart-cta{ background:var(--gold); color:var(--navy); font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; padding:9px 18px; border-radius:10px; border:none; cursor:pointer; }
+
+  /* MODAL */
+  .overlay{ position:fixed; inset:0; background:rgba(18,48,73,.5); display:none; align-items:flex-end; justify-content:center; z-index:50; }
+  .overlay.show{ display:flex; }
+  .modal{ background:var(--sand); width:100%; max-width:480px; border-radius:22px 22px 0 0; padding:22px 20px 26px; max-height:82vh; overflow-y:auto; animation:modalUp .25s ease; }
+  @keyframes modalUp{ from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+  .modal h2{ font-family:'Cairo', sans-serif; font-size:18px; color:var(--navy); margin-bottom:14px; }
+  .field label{ font-size:12.5px; color:var(--ink-soft); display:block; margin-bottom:6px; }
+  .field input{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); font-family:'Tajawal', sans-serif; font-size:14px; margin-bottom:14px; background:var(--foam); }
+  .order-list{ background:var(--foam); border-radius:14px; padding:12px 14px; margin-bottom:14px; border:1px solid var(--line); }
+  .order-row{ display:flex; justify-content:space-between; font-size:13px; padding:6px 0; border-bottom:1px dashed var(--line); }
+  .order-row:last-child{ border-bottom:none; }
+  .order-total{ display:flex; justify-content:space-between; font-family:'Cairo', sans-serif; font-weight:700; color:var(--navy); font-size:15px; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); }
+  .send-btn{ width:100%; background:var(--navy); color:var(--foam); font-family:'Cairo', sans-serif; font-weight:700; font-size:15px; padding:14px; border-radius:14px; border:none; cursor:pointer; }
+  .close-btn{ position:absolute; top:16px; left:20px; background:none; border:none; font-size:20px; color:var(--ink-soft); cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="hero-top">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#F2A93B" stroke-width="2"/>
+          <path d="M14 40 Q32 30 50 40" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+          <path d="M32 16 L32 38 L44 38 Z" fill="#FFFFFF" opacity="0.9"/>
+          <circle cx="20" cy="24" r="7" fill="#F2A93B"/>
+        </svg>
+        <div class="brand-text">
+          <h1>سالورين</h1>
+          <p>SALOREN &nbsp;·&nbsp; مأكولات بحرية ومشاوي</p>
+        </div>
+      </div>
+      <div class="table-chip">طاولة 07</div>
+    </div>
+    <div class="hero-line">اطلب من مكانك، بيوصلك بلمح البصر</div>
+    <div class="hero-sub">تصفّح المنيو، اختار اللي بيعجبك، وأرسل طلبك مباشرة.</div>
+  </div>
+
+  <div class="cats-wrap">
+    <div class="cats" id="cats"></div>
+    <div class="glow-indicator" id="glowIndicator"></div>
+  </div>
+
+  <div id="sections"></div>
+
+</div>
+
+<div class="cart-bar" id="cartBar">
+  <div class="cart-info"><b id="cartCount">0</b> أصناف · <b id="cartTotal">0</b> ₪</div>
+  <button class="cart-cta" id="openOrderBtn">متابعة الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="close-btn" id="closeModal">✕</button>
+    <h2>إتمام الطلب</h2>
+    <div class="field">
+      <label>اسمك</label>
+      <input type="text" id="customerName" placeholder="مثال: أحمد">
+    </div>
+    <div class="order-list" id="orderList"></div>
+    <button class="send-btn" id="sendOrderBtn">إرسال الطلب</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="config.js"></script>
+<script>
+  let CATEGORIES = {};   // { id: {name, order} }
+  let ITEMS = {};        // { catId: { itemId: {name, price, image} } }
+  let activeCat = null;
+  let cart = [];          // [{name, price, qty}]
+
+  const catsEl = document.getElementById('cats');
+  const sectionsEl = document.getElementById('sections');
+  const glowIndicator = document.getElementById('glowIndicator');
+
+  db.ref('categories').on('value', snap => {
+    CATEGORIES = snap.val() || {};
+    renderCats();
+  });
+  db.ref('items').on('value', snap => {
+    ITEMS = snap.val() || {};
+    renderSections();
+  });
+
+  function renderCats(){
+    const ids = Object.keys(CATEGORIES).sort((a,b)=> (CATEGORIES[a].order||0) - (CATEGORIES[b].order||0));
+    if(!activeCat && ids.length) activeCat = ids[0];
+    catsEl.innerHTML = ids.map(id => `
+      <div class="pill ${id===activeCat?'active':''}" data-id="${id}">${CATEGORIES[id].name}</div>
+    `).join('');
+    catsEl.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => switchCat(p.dataset.id, p)));
+    requestAnimationFrame(moveGlow);
+  }
+
+  function switchCat(id, el){
+    activeCat = id;
+    catsEl.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    el.classList.add('pulse');
+    setTimeout(()=> el.classList.remove('pulse'), 750);
+    moveGlow(el);
+    renderSections();
+    el.scrollIntoView({inline:'center', behavior:'smooth', block:'nearest'});
+  }
+
+  function moveGlow(el){
+    const target = el || catsEl.querySelector('.pill.active');
+    if(!target) return;
+    glowIndicator.style.left = target.offsetLeft + 'px';
+    glowIndicator.style.width = target.offsetWidth + 'px';
+  }
+
+  function renderSections(){
+    if(!activeCat || !ITEMS[activeCat]){
+      sectionsEl.innerHTML = `<div class="empty-state">ما في أصناف بهاد القسم بعد.</div>`;
+      return;
+    }
+    const items = ITEMS[activeCat];
+    const rows = Object.keys(items).map(id => {
+      const it = items[id];
+      const img = it.image || 'https://placehold.co/100x100/123049/FBF4E8?text=%20';
+      return `
+        <div class="item">
+          <img src="${img}" alt="">
+          <div class="item-body"><div class="item-name">${it.name}</div></div>
+          <div class="item-right">
+            <span class="price">${it.price} ₪</span>
+            <div class="add-btn" data-name="${it.name}" data-price="${it.price}">+</div>
+          </div>
+        </div>`;
+    }).join('');
+    sectionsEl.innerHTML = `
+      <div class="section">
+        <div class="section-title">${CATEGORIES[activeCat].name}</div>
+        ${rows}
+      </div>`;
+    sectionsEl.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => addToCart(btn));
+    });
+  }
+
+  function addToCart(btn){
+    const name = btn.dataset.name;
+    const price = parseInt(btn.dataset.price);
+    const existing = cart.find(c => c.name === name);
+    if(existing) existing.qty += 1;
+    else cart.push({name, price, qty:1});
+    btn.classList.add('added'); btn.textContent = '✓';
+    setTimeout(() => { btn.classList.remove('added'); btn.textContent = '+'; }, 600);
+    updateCartBar();
+  }
+
+  function updateCartBar(){
+    const count = cart.reduce((s,c)=>s+c.qty, 0);
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = total;
+    document.getElementById('cartBar').classList.toggle('show', count>0);
+  }
+
+  // ORDER MODAL
+  const overlay = document.getElementById('overlay');
+  document.getElementById('openOrderBtn').addEventListener('click', openOrderModal);
+  document.getElementById('closeModal').addEventListener('click', () => overlay.classList.remove('show'));
+
+  function openOrderModal(){
+    const list = document.getElementById('orderList');
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    list.innerHTML = cart.map(c => `
+      <div class="order-row"><span>${c.name} × ${c.qty}</span><span>${c.qty*c.price} ₪</span></div>
+    `).join('') + `<div class="order-total"><span>الإجمالي</span><span>${total} ₪</span></div>`;
+    overlay.classList.add('show');
+  }
+
+  document.getElementById('sendOrderBtn').addEventListener('click', () => {
+    const name = document.getElementById('customerName').value.trim();
+    if(!name){ alert('اكتب اسمك الأول'); return; }
+    if(cart.length === 0){ alert('السلة فاضية'); return; }
+
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    const order = {
+      customerName: name,
+      table: 'طاولة 07',
+      items: cart,
+      total,
+      status: 'جديد',
+      timestamp: Date.now()
+    };
+
+    // 1) يتبعت للوحة التحكم
+    db.ref('orders').push(order);
+
+    // 2) يتبعت على واتساب المطعم
+    const lines = cart.map(c => `${c.name} × ${c.qty} - ${c.qty*c.price} ₪`).join('\n');
+    const message =
+      `${RESTAURANT_NAME}\n` +
+      `------------------\n` +
+      `${lines}\n` +
+      `------------------\n` +
+      `الإجمالي: ${total} ₪\n` +
+      `------------------\n` +
+      `شكراً لطلبك 💙`;
+    const waUrl = `https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
+
+    // reset
+    cart = [];
+    updateCartBar();
+    overlay.classList.remove('show');
+    document.getElementById('customerName').value = '';
+  });
+</script>
+</body>
+</html>
