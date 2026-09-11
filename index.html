@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سالورين | المنيو</title>
+<meta name="description" content="مأكولات بحرية ومشاوي — تصفّح منيو سالورين واطلب مباشرة على واتساب">
+
+<!-- Open Graph / WhatsApp preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="سالورين | المنيو الرقمي">
+<meta property="og:description" content="مأكولات بحرية ومشاوي 🦐🔥 تصفّح المنيو واطلب مباشرة من مكانك">
+<meta property="og:image" content="https://aboodalda.github.io/saloren-menu/hero-bg.jpg">
+<meta property="og:url" content="https://aboodalda.github.io/saloren-menu/">
+<meta property="og:locale" content="ar_AR">
+
+<!-- Twitter Card (some apps fall back to this) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="سالورين | المنيو الرقمي">
+<meta name="twitter:description" content="مأكولات بحرية ومشاوي — اطلب مباشرة من مكانك">
+<meta name="twitter:image" content="https://aboodalda.github.io/saloren-menu/hero-bg.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#123049;
+    --sea:#2F6690;
+    --gold:#F2A93B;
+    --glow:#3FC5F5;
+    --sand:#FBF4E8;
+    --foam:#FFFFFF;
+    --ink:#1C232B;
+    --ink-soft:#5B6672;
+    --line: rgba(18,48,73,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Tajawal', sans-serif; background:var(--sand); color:var(--ink); -webkit-font-smoothing:antialiased; display:flex; justify-content:center; }
+  .app{ width:100%; max-width:480px; margin:0 auto; min-height:100vh; background:var(--sand); position:relative; padding-bottom:96px; transition: max-width .2s ease; }
+  @media (min-width:700px){ .app{ max-width:700px; } }
+  @media (min-width:1024px){ .app{ max-width:960px; } }
+
+  /* HERO */
+  .hero{ background: linear-gradient(160deg, rgba(18,48,73,.82) 0%, rgba(47,102,144,.72) 100%), url('hero-bg.jpg') center 30% / cover no-repeat; padding:28px 20px 46px; position:relative; overflow:hidden; color:var(--foam); }
+  .hero::after{ content:""; position:absolute; left:0; right:0; bottom:-2px; height:34px; background:var(--sand); border-radius:100% 100% 0 0 / 100% 100% 0 0; }
+  .hero-top{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand svg{ width:44px; height:44px; flex-shrink:0; }
+  .brand-text h1{ font-family:'Cairo', sans-serif; font-size:22px; font-weight:800; letter-spacing:.5px; }
+  .brand-text p{ font-size:11px; color:rgba(255,255,255,.75); letter-spacing:1px; }
+  .hero-line{ margin-top:22px; font-family:'Cairo', sans-serif; font-size:15px; font-weight:700; color:var(--gold); }
+  .hero-sub{ margin-top:4px; font-size:12.5px; color:rgba(255,255,255,.7); max-width:280px; line-height:1.6; }
+  .hero-actions{ display:flex; gap:10px; margin-top:18px; }
+  .hero-btn{ font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; padding:11px 18px; border-radius:12px; cursor:pointer; border:none; display:flex; align-items:center; gap:6px; }
+  .hero-btn-gold{ background:var(--gold); color:var(--navy); }
+  .hero-btn-outline{ background:rgba(255,255,255,.1); color:var(--foam); border:1px solid rgba(255,255,255,.35); }
+
+  /* INFO GRID */
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:16px 20px 6px; }
+  .info-card{ background:var(--foam); border:1px solid var(--line); border-radius:14px; padding:12px 14px; }
+  .info-label{ font-size:11px; color:var(--ink-soft); margin-bottom:4px; }
+  .info-value{ font-family:'Cairo', sans-serif; font-weight:700; font-size:13.5px; color:var(--navy); }
+  .info-card.clickable{ cursor:pointer; }
+
+  /* CATEGORY PILLS + GLOW */
+  .cats-wrap{ position:relative; padding:18px 20px 10px; }
+  .cats{ display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; position:relative; padding-bottom:8px; }
+  .cats::-webkit-scrollbar{ display:none; }
+  .pill{ flex-shrink:0; padding:9px 16px; border-radius:999px; background:var(--foam); border:1px solid var(--line); font-size:13px; font-weight:500; color:var(--ink-soft); white-space:nowrap; cursor:pointer; transition: background .25s ease, color .25s ease, border-color .25s ease; position:relative; }
+  .pill.active{
+    background: var(--sea);
+    color: var(--foam);
+    border-color: var(--sea);
+    animation: activePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes activePulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(63,197,245,.55); }
+    50%{ box-shadow:0 0 14px 5px rgba(63,197,245,.6); }
+  }
+
+  /* SECTION */
+  .section{ padding:6px 20px 8px; animation: sectionIn .3s ease; }
+  @keyframes sectionIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  .section-title{ font-family:'Cairo', sans-serif; font-size:17px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  .items-grid{ display:grid; grid-template-columns:1fr; gap:10px; }
+  @media (min-width:700px){ .items-grid{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1024px){ .items-grid{ grid-template-columns:1fr 1fr 1fr; } }
+  .footer-note{ text-align:center; font-size:11.5px; color:var(--ink-soft); padding:34px 20px 14px; }
+
+  /* PRE-ORDER VIEW */
+  .preorder-view{ position:fixed; inset:0; background:var(--sand); z-index:60; display:none; overflow-y:auto; }
+  .preorder-view.show{ display:block; }
+  .preorder-header{ background:linear-gradient(160deg, var(--navy) 0%, var(--sea) 100%); color:var(--foam); padding:20px; position:sticky; top:0; z-index:2; }
+  .preorder-back{ background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:var(--foam); font-family:'Cairo', sans-serif; font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:10px; cursor:pointer; margin-bottom:12px; }
+  .preorder-header h2{ font-family:'Cairo', sans-serif; font-size:19px; font-weight:800; }
+  .preorder-header p{ font-size:12px; color:rgba(255,255,255,.75); margin-top:6px; line-height:1.6; }
+  .preorder-list{ padding:16px 20px; max-width:480px; margin:0 auto; }
+  @media (min-width:700px){ .preorder-list{ max-width:700px; } }
+  @media (min-width:1024px){ .preorder-list{ max-width:960px; } }
+  .preorder-item{ background:var(--foam); border:1px solid var(--line); border-radius:16px; padding:14px 16px; margin-bottom:12px; }
+  .preorder-item-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .preorder-name{ font-family:'Cairo', sans-serif; font-weight:700; font-size:14.5px; color:var(--navy); }
+  .preorder-price{ font-family:'Cairo', sans-serif; font-weight:700; font-size:14px; color:var(--navy); white-space:nowrap; }
+  .preorder-note{ font-size:11.5px; color:var(--gold); margin-top:4px; }
+  .preorder-btn{ width:100%; margin-top:12px; background:var(--navy); color:var(--foam); font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; padding:11px; border-radius:12px; border:none; cursor:pointer; }
+
+  /* ITEM CARD */
+  .item{ display:flex; align-items:center; gap:12px; background:var(--foam); border-radius:16px; padding:12px; margin-bottom:10px; border:1px solid var(--line); }
+  .item img{ width:52px; height:52px; border-radius:12px; object-fit:cover; flex-shrink:0; background:var(--sand); }
+  .item-body{ flex:1; }
+  .item-name{ font-size:14.5px; font-weight:500; }
+  .item-right{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .price{ font-family:'Cairo', sans-serif; font-weight:700; font-size:14px; color:var(--navy); white-space:nowrap; }
+  .add-btn{ width:30px; height:30px; border-radius:9px; background:var(--sand); border:1px solid var(--line); color:var(--navy); font-size:17px; font-weight:700; display:flex; align-items:center; justify-content:center; cursor:pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+  .add-btn.added{ background:var(--gold); border-color:var(--gold); transform:scale(1.15); }
+  .item.unavailable{ opacity:.55; }
+  .unavailable-tag{ font-size:10.5px; color:var(--red,#D9534F); font-weight:700; }
+  .add-btn[disabled]{ cursor:not-allowed; opacity:.5; }
+  .empty-state{ padding:30px 20px; text-align:center; color:var(--ink-soft); font-size:13px; }
+
+  /* FLOATING CART */
+  .cart-bar{ position:fixed; bottom:16px; left:50%; transform:translateX(-50%) translateY(20px); width:calc(100% - 40px); max-width:440px; background:var(--navy); color:var(--foam); border-radius:16px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 14px 30px rgba(18,48,73,.35); opacity:0; pointer-events:none; transition:all .25s ease; z-index:20; }
+  .cart-bar.show{ opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
+  .cart-info{ font-size:13px; }
+  .cart-info b{ font-family:'Cairo', sans-serif; color:var(--gold); }
+  .cart-cta{ background:var(--gold); color:var(--navy); font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; padding:9px 18px; border-radius:10px; border:none; cursor:pointer; }
+
+  /* MODAL */
+  .overlay{ position:fixed; inset:0; background:rgba(18,48,73,.4); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:none; align-items:flex-end; justify-content:center; z-index:50; }
+  .overlay.show{ display:flex; }
+  .modal{ background:var(--sand); width:100%; max-width:480px; border-radius:22px 22px 0 0; padding:22px 20px 26px; max-height:82vh; overflow-y:auto; animation:modalUp .25s ease; }
+  @keyframes modalUp{ from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+  .modal h2{ font-family:'Cairo', sans-serif; font-size:18px; color:var(--navy); margin-bottom:14px; }
+  .field label{ font-size:12.5px; color:var(--ink-soft); display:block; margin-bottom:6px; }
+  .field input{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); font-family:'Tajawal', sans-serif; font-size:14px; margin-bottom:14px; background:var(--foam); }
+  .order-list{ background:var(--foam); border-radius:14px; padding:12px 14px; margin-bottom:14px; border:1px solid var(--line); }
+  .order-row{ display:flex; justify-content:space-between; font-size:13px; padding:6px 0; border-bottom:1px dashed var(--line); }
+  .order-row:last-child{ border-bottom:none; }
+  .order-total{ display:flex; justify-content:space-between; font-family:'Cairo', sans-serif; font-weight:700; color:var(--navy); font-size:15px; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); }
+  .send-btn{ width:100%; background:var(--navy); color:var(--foam); font-family:'Cairo', sans-serif; font-weight:700; font-size:15px; padding:14px; border-radius:14px; border:none; cursor:pointer; }
+  .edit-cart-btn{ width:100%; background:transparent; color:var(--navy); border:1px solid var(--line); font-family:'Cairo', sans-serif; font-weight:700; font-size:13.5px; padding:11px; border-radius:12px; cursor:pointer; margin-bottom:10px; }
+  .close-btn{ position:absolute; top:16px; left:20px; background:none; border:none; font-size:20px; color:var(--ink-soft); cursor:pointer; }
+  .qty-row{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px dashed var(--line); }
+  .qty-row:last-child{ border-bottom:none; }
+  .qty-name{ font-size:13.5px; flex:1; }
+  .qty-controls{ display:flex; align-items:center; gap:8px; }
+  .qty-btn{ width:26px; height:26px; border-radius:8px; background:var(--sand); border:1px solid var(--line); color:var(--navy); font-weight:700; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .qty-num{ font-family:'Cairo', sans-serif; font-weight:700; min-width:18px; text-align:center; font-size:13px; }
+  .qty-price{ font-family:'Cairo', sans-serif; font-weight:700; color:var(--navy); font-size:13px; min-width:56px; text-align:left; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="hero-top">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#F2A93B" stroke-width="2"/>
+          <path d="M14 40 Q32 30 50 40" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+          <path d="M32 16 L32 38 L44 38 Z" fill="#FFFFFF" opacity="0.9"/>
+          <circle cx="20" cy="24" r="7" fill="#F2A93B"/>
+        </svg>
+        <div class="brand-text">
+          <h1>سالورين</h1>
+          <p>SALOREN &nbsp;·&nbsp; مأكولات بحرية ومشاوي</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-line" id="heroLine">اطلب من مكانك، بيوصلك بلمح البصر</div>
+    <div class="hero-sub" id="heroSub">تصفّح المنيو، اختار اللي بيعجبك، وأرسل طلبك مباشرة.</div>
+    <div class="hero-actions">
+      <button class="hero-btn hero-btn-gold" id="browseMenuBtn">🍽️ تصفح المنيو</button>
+      <button class="hero-btn hero-btn-outline" id="callUsBtn">📞 اتصل بنا</button>
+      <button class="hero-btn hero-btn-outline" id="preorderBtn">📅 حجز مسبق</button>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">تقييمنا</div><div class="info-value">⭐ <span id="infoRating">-</span></div></div>
+    <div class="info-card"><div class="info-label">أوقات العمل</div><div class="info-value">🕐 <span id="infoHours">-</span></div></div>
+    <div class="info-card clickable" id="callCard"><div class="info-label">اتصل بنا</div><div class="info-value">📞 <span id="infoPhone">-</span></div></div>
+    <div class="info-card"><div class="info-label">موقعنا</div><div class="info-value">📍 <span id="infoLocation">-</span></div></div>
+  </div>
+
+  <div id="menuSection">
+    <div class="cats-wrap">
+      <div class="cats" id="cats"></div>
+    </div>
+
+    <div id="sections"></div>
+  </div>
+
+  <div class="footer-note">جميع الحقوق محفوظة لسالورين © 2026</div>
+
+</div>
+
+<div class="preorder-view" id="preorderView">
+  <div class="preorder-header">
+    <button class="preorder-back" id="preorderBackBtn">→ رجوع للمنيو</button>
+    <h2>📅 أصناف تحتاج حجز مسبق</h2>
+    <p>هاي الأصناف بتحتاج تحضير خاص، لازم تحجزها قبل يوم على الأقل. دوس "احجز الآن" وراسلنا مباشرة على واتساب لتأكيد التاريخ والكمية.</p>
+  </div>
+  <div class="preorder-list" id="preorderList"></div>
+</div>
+
+<div class="cart-bar" id="cartBar">
+  <div class="cart-info"><b id="cartCount">0</b> أصناف · <b id="cartTotal">0</b> ₪</div>
+  <button class="cart-cta" id="openOrderBtn">عرض السلة</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="close-btn" id="closeModal">✕</button>
+
+    <div id="cartView">
+      <h2>سلتك</h2>
+      <div class="order-list" id="qtyList"></div>
+      <button class="send-btn" id="goToFormBtn">متابعة الطلب</button>
+    </div>
+
+    <div id="formView" style="display:none">
+      <h2>إتمام الطلب</h2>
+      <div class="field">
+        <label>اسمك</label>
+        <input type="text" id="customerName" placeholder="مثال: أحمد">
+      </div>
+      <div class="field">
+        <label>رقم جوالك</label>
+        <input type="tel" id="customerPhone" placeholder="05xxxxxxxx">
+      </div>
+      <div class="field">
+        <label>رقم الطاولة</label>
+        <input type="text" id="tableNumber" placeholder="مثال: 4">
+      </div>
+      <div class="order-list" id="orderList"></div>
+      <button class="edit-cart-btn" id="editCartBtn">✎ تعديل السلة</button>
+      <button class="send-btn" id="sendOrderBtn">إرسال الطلب</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="config.js"></script>
+<script>
+  let CATEGORIES = {};   // { id: {name, order} }
+  let ITEMS = {};        // { catId: { itemId: {name, price, image} } }
+  let activeCat = null;
+  let cart = [];          // [{name, price, qty, catId}]
+
+  const CATEGORY_EMOJI = {
+    fish: '🦐', grill: '🍗', sandwich: '🥪', shawarma: '🌯',
+    salad: '🥗', drinks: '🥤', hotdrinks: '☕', sweets: '🍰', icecream: '🍨'
+  };
+  function emojiFor(catId){ return CATEGORY_EMOJI[catId] || '🍽️'; }
+
+  const catsEl = document.getElementById('cats');
+  const sectionsEl = document.getElementById('sections');
+
+  // ================= SETTINGS (info cards + hero text) =================
+  db.ref('settings').on('value', snap => {
+    const s = snap.val() || {};
+    document.getElementById('heroLine').textContent = s.heroLine || 'اطلب من مكانك، بيوصلك بلمح البصر';
+    document.getElementById('heroSub').textContent = s.heroSub || 'تصفّح المنيو، اختار اللي بيعجبك، وأرسل طلبك مباشرة.';
+    document.getElementById('infoRating').textContent = s.rating || '-';
+    document.getElementById('infoHours').textContent = s.hours || '-';
+    document.getElementById('infoPhone').textContent = s.phone || '-';
+    document.getElementById('infoLocation').textContent = s.location || '-';
+  });
+
+  document.getElementById('browseMenuBtn').addEventListener('click', () => {
+    document.getElementById('menuSection').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  function openWhatsAppWelcome(){
+    const msg = 'أهلاً وسهلاً بكم في مطعم وكفي سالورين 💙';
+    window.open(`https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+  document.getElementById('callUsBtn').addEventListener('click', openWhatsAppWelcome);
+  document.getElementById('callCard').addEventListener('click', openWhatsAppWelcome);
+
+  // ================= PRE-ORDER (حجز مسبق) =================
+  const preorderView = document.getElementById('preorderView');
+  document.getElementById('preorderBtn').addEventListener('click', () => {
+    preorderView.classList.add('show');
+  });
+  document.getElementById('preorderBackBtn').addEventListener('click', () => {
+    preorderView.classList.remove('show');
+  });
+
+  db.ref('preorderItems').on('value', snap => {
+    const data = snap.val() || {};
+    const ids = Object.keys(data);
+    const list = document.getElementById('preorderList');
+    if(!ids.length){
+      list.innerHTML = `<div class="empty-state">ما في أصناف حجز مسبق حالياً.</div>`;
+      return;
+    }
+    list.innerHTML = ids.map(id => {
+      const it = data[id];
+      return `
+        <div class="preorder-item">
+          <div class="preorder-item-top">
+            <div class="preorder-name">${it.name}</div>
+            <div class="preorder-price">${it.price} ₪</div>
+          </div>
+          ${it.note ? `<div class="preorder-note">${it.note}</div>` : ''}
+          <button class="preorder-btn" data-preorder="${it.name}">📅 احجز الآن</button>
+        </div>`;
+    }).join('');
+    list.querySelectorAll('[data-preorder]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.dataset.preorder;
+        const sep = '─'.repeat(15);
+        const msg = `سالورين 📅 | طلب حجز مسبق\n${sep}\n🍽️ الصنف: ${name}\n${sep}\n📆 الرجاء تأكيد التاريخ المتاح\n🔢 والكمية المطلوبة\n${sep}\n🙏 بانتظار تأكيدكم`;
+        window.open(`https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    });
+  });
+
+  db.ref('categories').on('value', snap => {
+    CATEGORIES = snap.val() || {};
+    renderCats();
+  });
+  db.ref('items').on('value', snap => {
+    ITEMS = snap.val() || {};
+    renderSections();
+  });
+
+  function renderCats(){
+    const ids = Object.keys(CATEGORIES).sort((a,b)=> (CATEGORIES[a].order||0) - (CATEGORIES[b].order||0));
+    if(!activeCat && ids.length) activeCat = ids[0];
+    catsEl.innerHTML = ids.map(id => `
+      <div class="pill ${id===activeCat?'active':''}" data-id="${id}">${CATEGORIES[id].name}</div>
+    `).join('');
+    catsEl.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => switchCat(p.dataset.id, p)));
+  }
+
+  function switchCat(id, el){
+    activeCat = id;
+    catsEl.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    renderSections();
+    el.scrollIntoView({inline:'center', behavior:'smooth', block:'nearest'});
+  }
+
+  function renderSections(){
+    if(!activeCat || !ITEMS[activeCat]){
+      sectionsEl.innerHTML = `<div class="empty-state">ما في أصناف بهاد القسم بعد.</div>`;
+      return;
+    }
+    const items = ITEMS[activeCat];
+    const rows = Object.keys(items).map(id => {
+      const it = items[id];
+      const imgTag = it.image ? `<img src="${it.image}" alt="">` : '';
+      const isAvailable = it.available !== false;
+      return `
+        <div class="item ${isAvailable ? '' : 'unavailable'}">
+          ${imgTag}
+          <div class="item-body">
+            <div class="item-name">${it.name}</div>
+            ${isAvailable ? '' : '<span class="unavailable-tag">غير متوفر حالياً</span>'}
+          </div>
+          <div class="item-right">
+            <span class="price">${it.price} ₪</span>
+            <div class="add-btn" data-name="${it.name}" data-price="${it.price}" data-cat="${activeCat}" ${isAvailable ? '' : 'disabled'}>+</div>
+          </div>
+        </div>`;
+    }).join('');
+    sectionsEl.innerHTML = `
+      <div class="section">
+        <div class="section-title">${CATEGORIES[activeCat].name}</div>
+        <div class="items-grid">${rows}</div>
+      </div>`;
+    sectionsEl.querySelectorAll('.add-btn:not([disabled])').forEach(btn => {
+      btn.addEventListener('click', () => addToCart(btn));
+    });
+  }
+
+  function addToCart(btn){
+    const name = btn.dataset.name;
+    const price = parseInt(btn.dataset.price);
+    const catId = btn.dataset.cat;
+    const existing = cart.find(c => c.name === name);
+    if(existing) existing.qty += 1;
+    else cart.push({name, price, qty:1, catId});
+    btn.classList.add('added'); btn.textContent = '✓';
+    setTimeout(() => { btn.classList.remove('added'); btn.textContent = '+'; }, 600);
+    updateCartBar();
+  }
+
+  function updateCartBar(){
+    const count = cart.reduce((s,c)=>s+c.qty, 0);
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = total;
+    document.getElementById('cartBar').classList.toggle('show', count>0);
+  }
+
+  // ORDER MODAL — two views: cart review, then contact form
+  const overlay = document.getElementById('overlay');
+  const cartView = document.getElementById('cartView');
+  const formView = document.getElementById('formView');
+
+  document.getElementById('openOrderBtn').addEventListener('click', openCartView);
+  document.getElementById('closeModal').addEventListener('click', () => overlay.classList.remove('show'));
+  document.getElementById('goToFormBtn').addEventListener('click', () => {
+    if(cart.length === 0){ alert('السلة فاضية'); return; }
+    renderOrderSummary();
+    cartView.style.display = 'none';
+    formView.style.display = 'block';
+  });
+  document.getElementById('editCartBtn').addEventListener('click', () => {
+    formView.style.display = 'none';
+    cartView.style.display = 'block';
+    renderQtyList();
+  });
+
+  function openCartView(){
+    cartView.style.display = 'block';
+    formView.style.display = 'none';
+    renderQtyList();
+    overlay.classList.add('show');
+  }
+
+  function renderQtyList(){
+    const list = document.getElementById('qtyList');
+    if(cart.length === 0){
+      list.innerHTML = `<div class="empty-state">السلة فاضية لسه، رجع تصفح المنيو وضيف أصناف.</div>`;
+      return;
+    }
+    list.innerHTML = cart.map((c,i) => `
+      <div class="qty-row">
+        <span class="qty-name">${c.name}</span>
+        <div class="qty-controls">
+          <div class="qty-btn" data-dec="${i}">−</div>
+          <span class="qty-num">${c.qty}</span>
+          <div class="qty-btn" data-inc="${i}">+</div>
+        </div>
+        <span class="qty-price">${c.qty*c.price} ₪</span>
+      </div>
+    `).join('');
+    list.querySelectorAll('[data-inc]').forEach(b => b.addEventListener('click', () => {
+      cart[b.dataset.inc].qty += 1; renderQtyList(); updateCartBar();
+    }));
+    list.querySelectorAll('[data-dec]').forEach(b => b.addEventListener('click', () => {
+      const i = b.dataset.dec;
+      cart[i].qty -= 1;
+      if(cart[i].qty <= 0) cart.splice(i,1);
+      renderQtyList(); updateCartBar();
+    }));
+  }
+
+  function renderOrderSummary(){
+    const list = document.getElementById('orderList');
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    list.innerHTML = cart.map(c => `
+      <div class="order-row"><span>${c.name} × ${c.qty}</span><span>${c.qty*c.price} ₪</span></div>
+    `).join('') + `<div class="order-total"><span>الإجمالي</span><span>${total} ₪</span></div>`;
+  }
+
+  document.getElementById('sendOrderBtn').addEventListener('click', () => {
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const table = document.getElementById('tableNumber').value.trim();
+    if(!name || !phone || !table){ alert('عبي الاسم ورقم الجوال ورقم الطاولة'); return; }
+    if(cart.length === 0){ alert('السلة فاضية'); return; }
+
+    const total = cart.reduce((s,c)=>s+c.qty*c.price, 0);
+    const orderNumber = String(Date.now()).slice(-4);
+    const order = {
+      orderNumber,
+      customerName: name,
+      phone,
+      table,
+      items: cart,
+      total,
+      status: 'جديد',
+      timestamp: Date.now()
+    };
+
+    // 1) يتبعت للوحة التحكم
+    db.ref('orders').push(order);
+
+    // 2) يتبعت على واتساب المطعم بنفس فورمات كافا
+    const sep = '─'.repeat(15);
+    const time = new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'});
+    const lines = cart.map(c => `${emojiFor(c.catId)} ${c.name} × ${c.qty} = ${(c.qty*c.price).toFixed(2)} ₪`).join('\n');
+    const message =
+      `سالورين #${orderNumber} | طلب جديد 🔥\n` +
+      `${sep}\n` +
+      `👤 ${name}\n` +
+      `🪑 طاولة رقم ${table}\n\n` +
+      `${lines}\n` +
+      `${sep}\n` +
+      `💰 المجموع: ${total.toFixed(2)} ₪\n\n` +
+      `⏰ ${time}\n` +
+      `🙏 شكراً لطلبك`;
+    const waUrl = `https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
+
+    // reset
+    cart = [];
+    updateCartBar();
+    overlay.classList.remove('show');
+    formView.style.display = 'none';
+    cartView.style.display = 'block';
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerPhone').value = '';
+    document.getElementById('tableNumber').value = '';
+  });
+</script>
+</body>
+</html>
